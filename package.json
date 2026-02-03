@@ -1,14 +1,13 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "subnoto",
-  "title": "Subnoto",
+  "title": "Subnoto - Confidential Electronic Signature",
   "type": "module",
-  "description": "Upload documents to Subnoto for electronic signature",
+  "description": "Send and manage documents for electronic signature in Subnoto from Raycast",
   "icon": "icon.png",
   "author": "corentin_mors",
   "categories": [
-    "Productivity",
-    "Applications"
+    "Productivity"
   ],
   "license": "MIT",
   "platforms": [
@@ -18,7 +17,8 @@
     {
       "name": "upload-document",
       "title": "Upload Document",
-      "description": "Upload a document to Subnoto and open it for editing",
+      "subtitle": "Subnoto",
+      "description": "Upload a document to Subnoto for electronic signature",
       "mode": "view"
     }
   ],

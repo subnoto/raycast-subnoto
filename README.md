@@ -40,6 +40,8 @@ You need a Subnoto account with API access. If you don't have one, sign up at [s
 
 - PDF (.pdf)
 - Microsoft Word (.doc, .docx)
+- OpenDocument Text (.odt)
+- Rich Text Format (.rtf)
 
 Maximum file size: 50 MB
 
