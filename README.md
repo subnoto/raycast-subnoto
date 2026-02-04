@@ -1,49 +1,64 @@
-# Subnoto
+# Subnoto - Confidential Electronic Signature
 
-Upload documents to [Subnoto](https://subnoto.com) for electronic signature directly from Raycast.
+Send and manage documents for electronic signature in [Subnoto](https://subnoto.com) directly from Raycast. Upload documents, browse workspaces, and open envelopes without leaving your workflow.
 
 ## Features
 
-- **Quick Upload**: Select a PDF or Word document and upload it to Subnoto with a single command
-- **Automatic Browser Redirect**: After uploading, the envelope edit page opens automatically in your browser
-- **Custom Titles**: Optionally set a custom title for your envelope, or use the filename by default
+### Upload Document
+
+- **Upload to any workspace**: Pick a Subnoto workspace from a dropdown and upload a PDF or Word document in one step.
+- **Custom envelope title**: Set a title for the envelope or leave it blank to use the filename.
+- **Open in browser**: After upload, the envelope edit page opens in your browser so you can add recipients and signature fields right away.
+
+### List Workspaces
+
+- **See all workspaces**: View your Subnoto workspaces with name and member count.
+- **Quick actions**: Open a workspace in Subnoto or copy its UUID to the clipboard.
+- **Refresh**: Reload the list without leaving the command.
+
+### List Envelopes
+
+- **Browse by workspace**: Filter envelopes by workspace (or view all) using the dropdown.
+- **Search and paginate**: Search envelopes and load more as you scroll.
+- **Envelope details**: See title, status, last update, and signature progress (e.g. 2/3 signatures).
+- **Quick actions**: Open an envelope in Subnoto or copy its UUID.
 
 ## Setup
 
 ### Prerequisites
 
-You need a Subnoto account with API access. If you don't have one, sign up at [subnoto.com](https://subnoto.com).
+You need a Subnoto account with API access. Sign up at [subnoto.com](https://subnoto.com) if you don’t have one.
 
-### Getting Your API Keys
+### API keys
 
-1. Log in to your [Subnoto dashboard](https://app.subnoto.com)
-2. Navigate to **Settings** → **API Keys**
-3. Create a new API key pair (Access Key and Secret Key)
-4. Copy both keys for use in the extension preferences
+1. Log in to your [Subnoto dashboard](https://app.subnoto.com).
+2. Go to **Settings** → **API Keys**.
+3. Create a new API key pair (Access Key and Secret Key).
+4. Copy both keys for the extension preferences.
 
-### Configuration
+### Extension configuration
 
-1. Open Raycast and search for "Upload Document"
-2. You'll be prompted to enter your API credentials:
-   - **API Access Key**: Your Subnoto API access key
-   - **API Secret Key**: Your Subnoto API secret key
+1. Open Raycast and run any Subnoto command (e.g. **Upload Document** or **List Workspaces**).
+2. When prompted, enter:
+   - **API Access Key**: your Subnoto API access key  
+   - **API Secret Key**: your Subnoto API secret key  
 
 ## Usage
 
-1. Open Raycast and search for **"Upload Document"**
-2. Select a PDF or Word document (.pdf, .doc, .docx)
-3. Optionally enter a custom title for the envelope
-4. Press Enter to upload
-5. The envelope edit page will open in your browser where you can add recipients and signature fields
+| Command            | What it does |
+|--------------------|---------------|
+| **Upload Document** | Choose a workspace, pick a file, optionally set a title, then upload. The envelope edit page opens in your browser. |
+| **List Workspaces** | View workspaces, open one in Subnoto, or copy its UUID. |
+| **List Envelopes**  | Browse envelopes (optionally by workspace), search, then open in Subnoto or copy UUID. |
 
-## Supported File Types
+## Supported file types
 
-- PDF (.pdf)
-- Microsoft Word (.doc, .docx)
-- OpenDocument Text (.odt)
-- Rich Text Format (.rtf)
+- **PDF** (.pdf)
+- **Microsoft Word** (.doc, .docx)
+- **OpenDocument Text** (.odt)
+- **Rich Text Format** (.rtf)
 
-Maximum file size: 50 MB
+Maximum file size: **50 MB**.
 
 ## Links
 
