@@ -27,6 +27,13 @@
       "subtitle": "Subnoto",
       "description": "List your Subnoto workspaces",
       "mode": "view"
+    },
+    {
+      "name": "list-envelopes",
+      "title": "List Envelopes",
+      "subtitle": "Subnoto",
+      "description": "List envelopes and documents in a workspace",
+      "mode": "view"
     }
   ],
   "preferences": [

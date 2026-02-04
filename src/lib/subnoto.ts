@@ -1,3 +1,4 @@
+import type { Envelope } from "./types.js";
 import type { Preferences } from "./types.js";
 import type { Workspace } from "./types.js";
 
@@ -26,3 +27,29 @@ export async function listWorkspaces(preferences: Preferences): Promise<Workspac
 
   return data.workspaces;
 }
+
+const ENVELOPES_PAGE_SIZE = 50;
+
+export async function listEnvelopes(
+  preferences: Preferences,
+  workspaceUuid: string | undefined,
+  page = 1
+): Promise<Envelope[]> {
+  const client = await getSubnotoClient(preferences);
+  const body = workspaceUuid === undefined || workspaceUuid === "" ? { page } : { workspaceUuid, page };
+  const { data, error } = await client.POST("/public/envelope/list", {
+    body,
+  });
+
+  if (error) {
+    throw new Error("Failed to fetch envelopes. Please check your API credentials.");
+  }
+
+  if (!data?.envelopes?.length) {
+    return [];
+  }
+
+  return data.envelopes;
+}
+
+export { ENVELOPES_PAGE_SIZE };
