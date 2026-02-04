@@ -20,10 +20,14 @@ declare type Preferences = ExtensionPreferences
 declare namespace Preferences {
   /** Preferences accessible in the `upload-document` command */
   export type UploadDocument = ExtensionPreferences & {}
+  /** Preferences accessible in the `list-workspaces` command */
+  export type ListWorkspaces = ExtensionPreferences & {}
 }
 
 declare namespace Arguments {
   /** Arguments passed to the `upload-document` command */
   export type UploadDocument = {}
+  /** Arguments passed to the `list-workspaces` command */
+  export type ListWorkspaces = {}
 }
 

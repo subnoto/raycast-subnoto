@@ -20,6 +20,13 @@
       "subtitle": "Subnoto",
       "description": "Upload a document to Subnoto for electronic signature",
       "mode": "view"
+    },
+    {
+      "name": "list-workspaces",
+      "title": "List Workspaces",
+      "subtitle": "Subnoto",
+      "description": "List your Subnoto workspaces",
+      "mode": "view"
     }
   ],
   "preferences": [

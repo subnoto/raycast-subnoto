@@ -1,37 +1,37 @@
-import { Action, ActionPanel, Form, getPreferenceValues, open, showToast, Toast, environment } from "@raycast/api";
+import "./lib/patch-url.js";
+
+import { Action, ActionPanel, Form, getPreferenceValues, open, showToast, Toast } from "@raycast/api";
 import { readFileSync } from "fs";
-import { basename, join } from "path";
-import { pathToFileURL } from "url";
-import { useState } from "react";
-
-// SDK does new URL('oak_session_wasm_nodejs_bg.wasm', import.meta.url); in Raycast's bundle
-// import.meta.url is undefined, so we patch URL to supply the assets path as base when base is missing.
-const OriginalURL = globalThis.URL;
-const wasmBase = pathToFileURL(join(environment.assetsPath, "oak_session_wasm_nodejs_bg.wasm")).href.replace(
-  /[^/]+$/,
-  ""
-);
-globalThis.URL = class PatchedURL extends OriginalURL {
-  constructor(input: string | URL, base?: string | URL) {
-    const isWasm =
-      base === undefined &&
-      (input === "oak_session_wasm_nodejs_bg.wasm" || String(input).endsWith("oak_session_wasm_nodejs_bg.wasm"));
-    super(input as string, isWasm ? wasmBase : base);
-  }
-} as typeof URL;
-
-interface Preferences {
-  apiAccessKey: string;
-  apiSecretKey: string;
-}
+import { basename } from "path";
+import { useEffect, useState } from "react";
+import { getSubnotoClient, listWorkspaces } from "./lib/subnoto.js";
+import type { Preferences, Workspace } from "./lib/types.js";
 
 interface FormValues {
   file: string[];
   title: string;
+  workspace: string;
 }
 
 export default function Command() {
   const [isLoading, setIsLoading] = useState(false);
+  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
+  const [workspacesLoading, setWorkspacesLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const preferences = getPreferenceValues<Preferences>();
+        const data = await listWorkspaces(preferences);
+        setWorkspaces(data);
+      } catch {
+        setWorkspaces([]);
+      } finally {
+        setWorkspacesLoading(false);
+      }
+    }
+    load();
+  }, []);
 
   async function handleSubmit(values: FormValues) {
     if (!values.file || values.file.length === 0) {
@@ -58,31 +58,21 @@ export default function Command() {
       return;
     }
 
+    const workspaceUuid = values.workspace;
+    if (!workspaceUuid) {
+      await showToast({
+        style: Toast.Style.Failure,
+        title: "No workspace selected",
+        message: "Please select a workspace to upload to.",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
       const preferences = getPreferenceValues<Preferences>();
-
-      const { SubnotoClient } = await import("@subnoto/api-client");
-      const client = new SubnotoClient({
-        apiBaseUrl: "https://enclave.subnoto.com",
-        accessKey: preferences.apiAccessKey,
-        secretKey: preferences.apiSecretKey,
-      });
-
-      await showToast({
-        style: Toast.Style.Animated,
-        title: "Connecting to Subnoto...",
-      });
-
-      // Get workspaces
-      const { data: workspaceData, error: workspaceError } = await client.POST("/public/workspace/list", { body: {} });
-
-      if (workspaceError || !workspaceData?.workspaces?.length) {
-        throw new Error("Failed to fetch workspaces. Please check your API credentials.");
-      }
-
-      const workspaceUuid = workspaceData.workspaces[0].uuid;
+      const client = await getSubnotoClient(preferences);
 
       await showToast({
         style: Toast.Style.Animated,
@@ -128,13 +118,25 @@ export default function Command() {
 
   return (
     <Form
-      isLoading={isLoading}
+      isLoading={isLoading || workspacesLoading}
       actions={
         <ActionPanel>
           <Action.SubmitForm title="Upload Document" onSubmit={handleSubmit} />
         </ActionPanel>
       }
     >
+      <Form.Dropdown
+        id="workspace"
+        title="Workspace"
+        storeValue
+        info="The Subnoto workspace to upload the document to."
+      >
+        {workspaces.length === 0 && !workspacesLoading ? (
+          <Form.Dropdown.Item value="" title="No workspaces (check API credentials)" />
+        ) : (
+          workspaces.map((w) => <Form.Dropdown.Item key={w.uuid} value={w.uuid} title={w.name} />)
+        )}
+      </Form.Dropdown>
       <Form.FilePicker
         id="file"
         title="Document"
