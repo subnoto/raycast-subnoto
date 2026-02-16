@@ -40,16 +40,16 @@ You need a Subnoto account with API access. Sign up at [subnoto.com](https://sub
 
 1. Open Raycast and run any Subnoto command (e.g. **Upload Document** or **List Workspaces**).
 2. When prompted, enter:
-   - **API Access Key**: your Subnoto API access key  
-   - **API Secret Key**: your Subnoto API secret key  
+   - **API Access Key**: your Subnoto API access key
+   - **API Secret Key**: your Subnoto API secret key
 
 ## Usage
 
-| Command            | What it does |
-|--------------------|---------------|
+| Command             | What it does                                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | **Upload Document** | Choose a workspace, pick a file, optionally set a title, then upload. The envelope edit page opens in your browser. |
-| **List Workspaces** | View workspaces, open one in Subnoto, or copy its UUID. |
-| **List Envelopes**  | Browse envelopes (optionally by workspace), search, then open in Subnoto or copy UUID. |
+| **List Workspaces** | View workspaces, open one in Subnoto, or copy its UUID.                                                             |
+| **List Envelopes**  | Browse envelopes (optionally by workspace), search, then open in Subnoto or copy UUID.                              |
 
 ## Supported file types
 
@@ -65,3 +65,11 @@ Maximum file size: **50 MB**.
 - [Subnoto Website](https://subnoto.com)
 - [Subnoto Documentation](https://subnoto.com/documentation)
 - [TypeScript SDK Documentation](https://subnoto.com/documentation/developers/sdks/typescript)
+
+## About embedded binary
+
+The extension uses a binary file to authenticate with the Subnoto API. This binary is embedded in the extension and is not visible to the user.
+
+The binary is embedded in the extension using the `@subnoto/api-client` package and is located in the `assets/oak_session_wasm_nodejs_bg.wasm` file.
+
+To generate the binary, run the following command: `npm run move-subnoto-wasm`.
