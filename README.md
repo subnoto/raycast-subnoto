@@ -68,8 +68,6 @@ Maximum file size: **50 MB**.
 
 ## About embedded binary
 
-The extension uses a binary file to authenticate with the Subnoto API. This binary is embedded in the extension and is not visible to the user.
+The extension uses a binary file to authenticate with the Subnoto API. The binary comes from the `@subnoto/api-client` package and is moved as it and is then located in the `assets/oak_session_wasm_nodejs_bg.wasm` file.
 
-The binary is embedded in the extension using the `@subnoto/api-client` package and is located in the `assets/oak_session_wasm_nodejs_bg.wasm` file.
-
-To generate the binary, run the following command: `npm run move-subnoto-wasm`.
+To move the binary, run the following command: `npm run move-subnoto-wasm`, this is done automatically when you `npm install`.
